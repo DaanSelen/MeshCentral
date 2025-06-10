@@ -22,7 +22,7 @@ else
 fi
 
 if [[ ${DYNAMIC_CONFIG,,} =~ ^(true|yes)$ ]]; then
-    cat "$CONFIG_FILE"
+    #cat "$CONFIG_FILE"
     echo "Using Dynamic Configuration values..."
 
     # BEGIN DATABASE CONFIGURATION FIELDS
@@ -245,7 +245,7 @@ if [[ ${DYNAMIC_CONFIG,,} =~ ^(true|yes)$ ]]; then
     # certUrl
     if [[ -n $REVERSE_PROXY ]] && [[ -n $REVERSE_PROXY_TLS_PORT ]]; then
         REVERSE_PROXY_STRING="${REVERSE_PROXY}:${REVERSE_PROXY_TLS_PORT}"
-    
+
         echo "Setting certUrl... - $REVERSE_PROXY_STRING"
         sed -i 's/"_certUrl"/"certUrl"/' "$CONFIG_FILE"
         jq --arg cert_url "$REVERSE_PROXY_STRING" \
