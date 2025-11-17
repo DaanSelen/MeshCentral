@@ -1,5 +1,5 @@
 ### STAGE 1 BUILDING.
-FROM node:lts-trixie-slim AS builder
+FROM node:22-alpine3.22 AS builder
 
 # Any value inside one of the disable ARGs will be accepted.
 ARG DISABLE_EXTRACT="yes"
@@ -47,13 +47,11 @@ RUN rm -rf /opt/meshcentral/meshcentral/docker /opt/meshcentral/meshcentral/node
 
 ### STAGE 2 PRECOMPILE DEPS MODULE
 
-FROM node:lts-trixie-slim AS dep-compiler
+FROM node:22-alpine3.22 AS dep-compiler
 
-ENV NODE_ENV="production"
-
-RUN apt-get update && \
-    echo -e "----------\nINSTALLING DEBIAN PACKAGES...\n----------"; \
-    apt-get install -y --no-install-recommends --no-install-suggests \
+RUN apk update && \
+    echo -e "----------\nINSTALLING ALPINE PACKAGES...\n----------"; \
+    apk add --no-cache --update \
         bash gcc g++ jq make python3 tzdata
 
 COPY --from=builder /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
@@ -70,9 +68,7 @@ FROM golang:trixie AS mongo-tools-compiler
 
 ARG INCLUDE_MONGODB_TOOLS="false"
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends --no-install-suggests \
-        git lsb-release
+FROM node:22-alpine3.22 AS runtime
 
 RUN case "$INCLUDE_MONGODB_TOOLS" in \
         true|yes|TRUE|YES) \
