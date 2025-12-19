@@ -1,12 +1,14 @@
 services:
   meshcentral:
-    image: ghcr.io/ylianst/meshcentral:latest
+    image: docker.io/dselen/meshcentral:latest
     environment:
       - DYNAMIC_CONFIG=false # Show the option but disable it by default, for safety.
       - HOSTNAME=myserver.domain.com # Set the hostname in the config.json
       - ALLOW_NEW_ACCOUNTS=false # Disable creation of new accounts (except for the first user) in the config.json
       - USE_MONGODB=true # Enable the Mongo connector in the config.json
       - MONGO_URL=mongodb://username:password@mongodb:27017/meshcentral # Example MONGO_URL
+      - INSTALL_STYLISHUI=true
+      - STYLISHUI_FORCE_LATEST=true
     volumes:
       - meshcentral-data:/opt/meshcentral/meshcentral-data
       - meshcentral-files:/opt/meshcentral/meshcentral-files
