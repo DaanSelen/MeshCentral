@@ -12,8 +12,7 @@ RUN apt-get update && \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     echo "Types: deb \nURIs: https://deb.nodesource.com/node_${NODE_MAJOR}.x/ \nSuites: nodistro \nComponents: main \nSigned-By: /etc/apt/keyrings/nodesource.gpg" > /etc/apt/sources.list.d/nodesource.sources && cat /etc/apt/sources.list.d/nodesource.sources && \
     apt-get update && \
-    apt-get install -y --no-install-recommends --no-install-suggests \
-        nodejs npm
+    apt-get install -y nodejs npm
 
 ### STAGE 2 BUILDING MESHCENTRAL BASICS
 FROM node-base AS mesh-compiler
